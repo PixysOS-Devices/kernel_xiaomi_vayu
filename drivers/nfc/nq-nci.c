@@ -153,16 +153,17 @@ static irqreturn_t nqx_dev_irq_handler(int irq, void *dev_id)
 	return IRQ_HANDLED;
 }
 
+#if 0
 static int is_data_available_for_read(struct nqx_dev *nqx_dev)
 {
 	int ret;
-	return 0;
 
 	nqx_enable_irq(nqx_dev);
 	ret = wait_event_interruptible_timeout(nqx_dev->read_wq,
 		!nqx_dev->irq_enabled, msecs_to_jiffies(MAX_IRQ_WAIT_TIME));
 	return ret;
 }
+#endif
 
 static ssize_t nfc_read(struct file *filp, char __user *buf,
 					size_t count, loff_t *offset)
@@ -792,6 +793,7 @@ static const struct file_operations nfc_dev_fops = {
 #endif
 };
 
+#if 0
 /*
  * function: get_nfcc_hw_info()
  *
@@ -815,7 +817,6 @@ static int get_nfcc_hw_info(struct i2c_client *client,
 		struct nqx_dev *nqx_dev, char nci_reset_rsp_payload_len)
 {
 	int ret = 0;
-	return ret;
 
 	char *nci_init_cmd = NULL;
 	char *nci_init_rsp = NULL;
@@ -926,7 +927,6 @@ err_nfcc_hw_info:
 static int nfcc_hw_check(struct i2c_client *client, struct nqx_dev *nqx_dev)
 {
 	int ret = 0;
-	return ret;
 
 	unsigned int enable_gpio = nqx_dev->en_gpio;
 	char *nci_reset_cmd = NULL;
@@ -1114,6 +1114,7 @@ done:
 
 	return ret;
 }
+#endif
 
 /*
  * Routine to enable clock.
@@ -1440,6 +1441,7 @@ static int nqx_probe(struct i2c_client *client,
 	}
 	nqx_disable_irq(nqx_dev);
 
+#if 0
 	/*
 	 * To be efficient we need to test whether nfcc hardware is physically
 	 * present before attempting further hardware initialisation.
@@ -1452,6 +1454,7 @@ static int nqx_probe(struct i2c_client *client,
 		/* We don't think there is hardware switch NFC OFF */
 		goto err_request_hw_check_failed;
 	}
+#endif
 
 	/* Register reboot notifier here */
 	r = register_reboot_notifier(&nfcc_notifier);
